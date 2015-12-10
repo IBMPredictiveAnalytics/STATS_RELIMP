@@ -1,0 +1,17 @@
+Name: STATS RELIMP
+Dialog-Specs: STATS_RELIMP.spd
+Command-Specs: STATS_RELIMP.xml
+Code-Files: STATS_RELIMP.R
+Misc-Files: extsyntax.css,markdown.html,IBMdialogicon.png
+Summary: Relative importance measures for regression
+Description: This package provides various relative importance measure
+ s for regression explanatory variables and shows how regression coeff
+ icients vary as the model size changes.
+Author: JKP, IBM SPSS
+Version: 1.2.10
+Product-Version: 18
+Date: 1/2/2014
+Categories: statistics, regression
+Plugins: R
+R-Packages: relaimpo
+Translation-Catalogues: lang

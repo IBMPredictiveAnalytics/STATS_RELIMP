@@ -1,0 +1,138 @@
+#/***********************************************************************
+# * Licensed Materials - Property of IBM 
+# *
+# * IBM SPSS Products: Statistics Common
+# *
+# * (C) Copyright IBM Corp. 1989, 2014
+# *
+# * US Government Users Restricted Rights - Use, duplication or disclosure
+# * restricted by GSA ADP Schedule Contract with IBM Corp. 
+# ************************************************************************/
+
+# NLS_ENCODING=UTF-8
+# IBMUPYTH
+
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: STATS_RELIMP.R:85
+msgid "The R relaimpo package is required but could not be loaded."
+msgstr ""
+"Необходим пакет R relaimpo, но его не удалось загрузить."
+
+#: STATS_RELIMP.R:91
+msgid "The dependent variable cannot be categorical"
+msgstr ""
+"Зависимая переменная не может быть категориальной"
+
+#: STATS_RELIMP.R:98
+msgid "Measures Beta Sq, Pratt, and car cannot be used with categorical variables and have been dropped."
+msgstr ""
+"Меры Бета-квадрат, Пратта и CAR нельзя использовать с категориальными значениями. Они будут пропущены."
+
+#: STATS_RELIMP.R:103
+msgid "Measure car cannot be used if there are any forced variables."
+msgstr ""
+"Меру CAR нельзя использовать при отсутствии принудительных значений."
+
+#: STATS_RELIMP.R:118
+msgid "Regression Relative Importance"
+msgstr ""
+"Относительная важность регрессии"
+
+#: STATS_RELIMP.R:121
+msgid "Dependent variable"
+msgstr ""
+"Зависимая переменная"
+
+#: STATS_RELIMP.R:121
+msgid "Number of Cases"
+msgstr ""
+"Количество наблюдений"
+
+#: STATS_RELIMP.R:121
+msgid "Number of Valid Cases"
+msgstr ""
+"Количество действительных наблюдений"
+
+#: STATS_RELIMP.R:122
+msgid "R-Squared"
+msgstr ""
+"R-квадрат"
+
+#: STATS_RELIMP.R:122
+msgid "Forced Variables"
+msgstr ""
+"Принудительные переменные"
+
+#: STATS_RELIMP.R:122
+msgid "R-Squared for Forced Variables"
+msgstr ""
+"R-квадрат для принудительных переменных"
+
+#: STATS_RELIMP.R:123
+msgid "R-Squared for Other Predictors"
+msgstr ""
+"R-квадрат для других предикторов"
+
+#: STATS_RELIMP.R:123
+msgid "Metric Normalization"
+msgstr ""
+"Нормализация метрики"
+
+#: STATS_RELIMP.R:139
+msgid "Summary Fit Statistics"
+msgstr ""
+"Итоговая статистика аппроксимации"
+
+#: STATS_RELIMP.R:140
+#: STATS_RELIMP.R:140
+msgid "Summary"
+msgstr ""
+"Итог"
+
+#: STATS_RELIMP.R:150
+msgid "Measures are scaled to 100%."
+msgstr ""
+"Меры масштабированы до 100%."
+
+#: STATS_RELIMP.R:152
+msgid "Measures are not scaled to 100%."
+msgstr ""
+"Меры не масштабированы до 100%."
+
+#: STATS_RELIMP.R:154
+msgid "Measure lmg is also known as the Shapley value"
+msgstr ""
+"Мера lmg также известная как значение Шарпли"
+
+#: STATS_RELIMP.R:155
+#: STATS_RELIMP.R:156
+msgid "Relative Importance Measures"
+msgstr ""
+"Меры относительной важности"
+
+#: STATS_RELIMP.R:162
+msgid "Importance Ranks by Measure"
+msgstr ""
+"Ранги важности по мере"
+
+#: STATS_RELIMP.R:163
+msgid "Importance Rank"
+msgstr ""
+"Ранг важности"
+
+#: STATS_RELIMP.R:167
+msgid "Average Coefficients by Model Size"
+msgstr ""
+"Средние коэффициенты по размеру модели"
+
+#: STATS_RELIMP.R:171
+msgid "Relative Importance for %s"
+msgstr ""
+"Относительная важность для %s"
+
+

@@ -1,0 +1,138 @@
+#/***********************************************************************
+# * Licensed Materials - Property of IBM 
+# *
+# * IBM SPSS Products: Statistics Common
+# *
+# * (C) Copyright IBM Corp. 1989, 2014
+# *
+# * US Government Users Restricted Rights - Use, duplication or disclosure
+# * restricted by GSA ADP Schedule Contract with IBM Corp. 
+# ************************************************************************/
+
+# NLS_ENCODING=UTF-8
+# IBMUPYTH
+
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: STATS_RELIMP.R:85
+msgid "The R relaimpo package is required but could not be loaded."
+msgstr ""
+"R relaimpo 패키지가 필요하지만 로드할 수 없습니다."
+
+#: STATS_RELIMP.R:91
+msgid "The dependent variable cannot be categorical"
+msgstr ""
+"종속변수는 범주형일 수 없습니다."
+
+#: STATS_RELIMP.R:98
+msgid "Measures Beta Sq, Pratt, and car cannot be used with categorical variables and have been dropped."
+msgstr ""
+"측도 Beta Sq, Pratt 및 car는 범주형 변수와 함께 사용할 수 없어 삭제되었습니다."
+
+#: STATS_RELIMP.R:103
+msgid "Measure car cannot be used if there are any forced variables."
+msgstr ""
+"강제 변수가 있을 경우 측도 car는 사용할 수 없습니다."
+
+#: STATS_RELIMP.R:118
+msgid "Regression Relative Importance"
+msgstr ""
+"회귀 상대적 중요도"
+
+#: STATS_RELIMP.R:121
+msgid "Dependent variable"
+msgstr ""
+"종속변수"
+
+#: STATS_RELIMP.R:121
+msgid "Number of Cases"
+msgstr ""
+"케이스 수"
+
+#: STATS_RELIMP.R:121
+msgid "Number of Valid Cases"
+msgstr ""
+"유효 케이스 수"
+
+#: STATS_RELIMP.R:122
+msgid "R-Squared"
+msgstr ""
+"R-제곱"
+
+#: STATS_RELIMP.R:122
+msgid "Forced Variables"
+msgstr ""
+"강제 변수"
+
+#: STATS_RELIMP.R:122
+msgid "R-Squared for Forced Variables"
+msgstr ""
+"강제 변수의 R-제곱"
+
+#: STATS_RELIMP.R:123
+msgid "R-Squared for Other Predictors"
+msgstr ""
+"다른 예측자의 R-제곱"
+
+#: STATS_RELIMP.R:123
+msgid "Metric Normalization"
+msgstr ""
+"정량 정규화"
+
+#: STATS_RELIMP.R:139
+msgid "Summary Fit Statistics"
+msgstr ""
+"요약 적합도 통계량"
+
+#: STATS_RELIMP.R:140
+#: STATS_RELIMP.R:140
+msgid "Summary"
+msgstr ""
+"요약"
+
+#: STATS_RELIMP.R:150
+msgid "Measures are scaled to 100%."
+msgstr ""
+"측도는 100%로 척도화됩니다."
+
+#: STATS_RELIMP.R:152
+msgid "Measures are not scaled to 100%."
+msgstr ""
+"측도는 100%로 척도화되지 않습니다."
+
+#: STATS_RELIMP.R:154
+msgid "Measure lmg is also known as the Shapley value"
+msgstr ""
+"측도 lmg는 섀플리 값으로도 알려져 있습니다."
+
+#: STATS_RELIMP.R:155
+#: STATS_RELIMP.R:156
+msgid "Relative Importance Measures"
+msgstr ""
+"상대적 중요도 측도"
+
+#: STATS_RELIMP.R:162
+msgid "Importance Ranks by Measure"
+msgstr ""
+"측도별 중요도 순위"
+
+#: STATS_RELIMP.R:163
+msgid "Importance Rank"
+msgstr ""
+"중요도 순위"
+
+#: STATS_RELIMP.R:167
+msgid "Average Coefficients by Model Size"
+msgstr ""
+"모형 크기별 평균 계수"
+
+#: STATS_RELIMP.R:171
+msgid "Relative Importance for %s"
+msgstr ""
+"%s의 상대적 중요도"
+
+

@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Relative Importance Regression Measures</title>
+  <style type="text/css">
+
+  <!-- 
+
+  H1 {font-weight:bold; color:#006699; font-size:125%; }
+  H2 {font-weight:bold; color:#006699; font-size:110%; }
+  TABLE {font-size:100%;}
+
+  /* paragraph tags */
+  .step {text-indent: -1.3em; margin-left:1.3em; margin-top: 0px;}
+  .menuselection {margin-left:10px}
+  .bullet {list-style-type: disc;margin-top:12px; margin-left:36px; text-indent:-1em; }
+  .codeblock {background-color: #ffffe6; display:block; margin-left:5px; padding:5px;}
+
+  /* inline tags */
+  .screen {font-weight:bold; color:#408080}                       /*** used refer to on-screen text ***/
+  .name {font-style: italic}                                                       /*** used to tag names, such as variable names, file names, and so forth ***/
+  .runinhead {font-weight: bold} 
+  .superscript {vertical-align:super; font-size:80%}
+  .subscript {vertical-align:sub; font-size:80%}
+
+
+  --> 
+  </style>
+</head>
+
+<body>
+  <h1>Relative Importance Measures for Regression</h1>This command
+  calculates various relative importance measures for regression
+  predictor variables
+
+  <p><span class="runinhead">Dependent Variable</span> Select a
+  scale-level dependent variable.</p>
+
+  <p><span class="runinhead">Forced Variables</span> Optionally
+  select variables that will always be included in the regression.
+  Importance measures are not calculated for these variables.</p>
+
+  <p><span class="runinhead">Independent Variables</span> Select
+  one or more predictor variables whose importance measures should
+  be calculated.</p>
+
+  <p>Any categorical independent or forced variables are
+  automatically converted to factors, and the importance measures
+  for non-forced variables are reported for the entire factor.</p>
+  
+  <p><span class="runinhead">Weight</span> The standard Statistics
+  weight setting is not used.  Weights can be replication weights,
+  heteroscedasticity weights, or inverse probability of selection
+  weights.</p>
+
+  <p><span class="runinhead">Importance Metrics</span> Select one
+  or more importance measure to be calculated.</p>
+
+  <p><span class="runinhead">Shapley Value</span> the incremental
+  R2 for the variable averaged over all models. This is referred to
+  as LMG in the output.</p>
+
+  <p><span class="runinhead">First</span> The R2 for the variable
+  when entered first</p>
+
+  <p><span class="runinhead">Last</span> The incremental R2 when
+  the variable is entered last</p>
+
+  <p><span class="runinhead">Beta Sq</span> The square of the
+  standardized coefficient. These values would sum to the R2 if the
+  independent variables were uncorrelated.</p>
+
+  <p><span class="runinhead">Pratt</span> The standardized
+  coefficient times the correlation</p>
+
+  <p><span class="runinhead">CAR</span> Marginal correlations after
+  adjusting for correlations among the regressors.</p>
+
+  <h2>Options</h2>
+
+  <p><span class="runinhead">Scale relative importance measures to
+  100%</span> All of the importance measures decompose the equation
+  R2 into parts except for First and Last. Check this box to scale
+  the importance measures to sum to 100%</p>
+
+  <p><span class="runinhead">Display regressor ranks</span> Check
+  this box to display a table showing the importance rank of each
+  of the non-forced regressors for each importance measure</p>
+
+  <p><span class="runinhead">Plot relative importance</span> Check
+  this box to display a bar chart of the importance measures for
+  each measure. Variable names for some bars will be omitted if
+  there is insufficient space for them, but the bars are in the
+  same order as the non-forced regressors. The names may be
+  truncated.</p>
+
+  <p><span class="runinhead">Missing Values</span> Select listwise
+  to delete cases with missing values or Stop to terminate the
+  procedure if missing values are found.</p>
+
+  <p>This procedure is computationally intensive and can take a
+  long time if there are many independent variables.</p>
+
+  <p>Note: Occasionally the computations may fail with an assertion
+  of singularity when the regressor matrix is not actually
+  singular. It may help in such a case to rescale variables with
+  very large values.</p>
+
+  <h2>Additional Features</h2>
+
+  <p>This dialog generates syntax for the STATS RELIMP extension
+  command. To display help for this command, run the following
+  syntax:</p>
+
+  <p class="codeblock">STATS RELIMP /HELP.</p>
+
+  <p>One additional importance metric is only available in the
+  non-US version of the relaimpo package which must be obtained
+  from http://prof.beuth-hochschule.de/groemping/relaimpo and is
+  licensed for use only outside the United States. For this reason,
+  this extension command has not been tested with this option. This
+  option is not supported in the dialog box but can be specified in
+  the MEASURE list.</p>
+
+  <p>PMVD - the proportional marginal variance decomposition as
+  proposed by Feldman It can be interpreted as a weighted average
+  over orderings among regressors, with data-dependent weights</p>
+
+  <h2>Requirements</h2>This command requires the R Essentials and
+  the STATS RELIMP extension command. You can download these from
+  the SPSS Community at www.ibm.com/developerworks/spssdevcentral.
+  It also requires the R relaimpo package and at least Statistics
+  Version 18. The relaimpo package will be automatically downloads
+  during the command installation if possible.
+
+  <h2>Acknowledgements</h2>The R package used in this command is
+  due to Ulrike Groemping, BHT Berlin<br>
+  <hr>
+
+  <p style="font-size:80%;">
+  © Copyright IBM Corp. 1989, 2013</p>
+</body>
+</html>

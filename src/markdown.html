@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>STATS RELIMP Extension Command</title>
+
+<link rel="stylesheet" type="text/css" href="extsyntax.css" />
+
+</head>
+
+<body>
+<h1>STATS RELIMP Extension Command</h1>
+
+<p>Calculate various relative importance measures for regression predictor variables </p>
+<div class="syntax">
+<p>STATS RELIMP  DEPENDENT=<em>variable</em><sup>&#42;</sup></br>
+FORCED=<em>variables</em></br>
+ENTER=<em>variables</em><sup>&#42;</sup> </br>
+MEASURE=LMG<sup>&#42;&#42;</sup> FIRST LAST BETASQ PRATT</p>
+
+<p>/OPTIONS SCALE=NO<sup>&#42;&#42;</sup> or YES </br>
+RANKS=NO<sup>&#42;&#42;</sup> or YES</br>
+MISSING=LISTWISE<sup>&#42;&#42;</sup> or STOP</br>
+WEIGHT=<em>weight variable</em>
+</p>
+
+<p>/HELP</p>
+
+
+
+<p><sup>&#42;</sup> Required<br/>
+<sup>&#42;&#42;</sup> Default</p>
+</div>
+<p>STATS RELIMP /HELP prints this information and does nothing else.</p>
+
+<pre class="example"><code>STATS DEPENDENT=y ENTER=x1 x2 x3 MEASURE=LMG FIRST LAST
+</code></pre>
+
+<p><strong>DEPENDENT</strong> and <strong>ENTER</strong> specify the dependent variable
+and the candiate predictors.  </p>
+
+<p><strong>FORCED</strong> variables are always included in the equation.  The importance measures and
+related statistics are calculated for the ENTER variables.  Categorical variables
+are converted to factors.</p>
+
+<p>Occasionally the computations fail with a singularity message.  If this occurs, it
+may help to rescale variables with very large values.</p>
+
+<p><strong>MEASURE</strong> specifies one or more importance measure calculated for each ENTER variable.  The choices are</p>
+
+<ul>
+<li><strong>LMG</strong>: also know as the Shapley value - the incremental R2 for the variable averaged over all models</li>
+<li><strong>FIRST</strong>: the R2 when only that variable is entered</li>
+<li><strong>LAST</strong>: the incremental R2 when the variable is entered last</li>
+<li><strong>BETASQ</strong>: the square of the standardized coefficient</li>
+<li><strong>PRATT</strong>: the standardized coefficient times the correlation</li>
+<li><strong>PMVD</strong>: the proportional marginal variance decomposition as proposed by Feldman. 
+It can be interpreted as a weighted average over orderings among regressors,
+with data-dependent weights.  PMVD is only available in the non-US version of the relaimpo package which must be obtained from
+<a href="http://prof.beuth-hochschule.de/groemping/relaimpo">http://prof.beuth-hochschule.de/groemping/relaimpo</a>
+and is licensed for use only outside the United States.  For this reason, this extension command has not been tested with this option.<br/></li>
+</ul>
+
+<p>All the measure except for FIRST and LAST sum to the overall R2.</p>
+
+<h2>OPTIONS</h2>
+
+<p><strong>SCALE</strong>=YES scales the importance measure to sum to 100%.  This is not 
+meaningful for FIRST and LAST.</p>
+
+<p>If <strong>RANKS</strong>=YES, a table is produced showing the rank of each variable
+for each importance measure specified.</p>
+
+<p>By default, the calculations are carried out only on complete cases.
+<strong>MISSING</strong>=STOP stops the calculation if any missing values are encountered.</p>
+
+<p><strong>WEIGHT</strong> can specify a variable to be used as the weight.
+The variable must be specified explicitly: the Statistics weight variable, if any,
+is not automatically used.</p>
+
+<p>&copy; Copyright IBM Corp. 1989, 2015</p>
+
+</body>
+
+</html>
+
