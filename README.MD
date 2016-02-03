@@ -1,11 +1,13 @@
 # STATS RELIMP
-## Relative Importance Measures for Regression
-Calculate various relative importance measures for regression predictor variables
+## Relative importance measures for regression
+This package provides various relative importance measures for regression explanatory variables and shows how regression coefficients vary as the model size changes.
 
 ---
 Requirements
 ----
-- IBM SPSS Statistics 18 or later
+- IBM SPSS Statistics 18 or later and the corresponding IBM SPSS Statistics-Integration Plug-in for R.
+
+Note: For users with IBM SPSS Statistics version 21 or higher, the STATS RELIMP extension is installed as part of IBM SPSS Statistics-Essentials for R.
 
 ---
 Installation intructions
