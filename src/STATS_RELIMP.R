@@ -86,23 +86,45 @@ relimp <- function(dependent, enter, forced=NULL, measure="lmg",
         warns$warn(gtxt("The R relaimpo package is required but could not be loaded."),
             dostop=TRUE)})
     
+    splitvars = spssdata.GetSplitVariableNames()
+    if (length(splitvars) > 0 && splitvars[[1]] != "Imputation_") {
+        warns$warn(gtxt("Splits are not supported in this procedure"), dostop=TRUE)
+    }
     allvars = c(dependent, enter, forced, weight)   # if forced is NULL, it is ignored.  Same with weight
-    dta<-spssdata.GetDataFromSPSS(allvars, missingValueToNA = TRUE,
+    if (length(splitvars) > 0) {
+        dta = getsplits(allvars)
+        hascatvars = any(sapply(dta[[1]], is.factor))
+        dvcat = is.factor(dta[1][[1]])
+        numcases = sum(sapply(dta, nrow))
+        issplit = TRUE
+        numsplits = length(dta)
+    } else {
+        dta<-spssdata.GetDataFromSPSS(allvars, missingValueToNA = TRUE,
         factorMode = "labels")
-    if (is.factor(dta[,1])) 
+        numcases = nrow(dta)
+        hascatvars = any(sapply(dta, is.factor))
+        dvcat = is.factor(dta[[1]])
+        issplit = FALSE
+        numsplits = 0
+    }
+
+    if (dvcat) {
         warns$warn(gtxt("The dependent variable cannot be categorical"), dostop=TRUE)
+    }
     numenter = length(enter)
     numforced = length(forced)
-    numcases = nrow(dta)
-    if (any(sapply(dta, is.factor))) {   # some measures not allowed with categorical variables
+
+    if (hascatvars) {   # some measures not allowed with categorical variables
         illegal = intersect(c('betasq', 'pratt', 'car'), measure)
         if (length(illegal) > 0) {
             warns$warn(gtxt(
                 "Measures Beta Sq, Pratt, and car cannot be used with categorical variables and have been dropped."),
             dostop=FALSE)
-            measure = setdiff(union(measure, 'lmg'), illegal)  # drop illegals and add Shapley
+         measure = setdiff(union(measure, 'lmg'), illegal)  # drop illegals and add Shapley
+
         }
     }
+
     if (numforced > 0 && "car" %in% measure)
         warns$warn(gtxt("Measure car cannot be used if there are any forced variables."), dostop=TRUE)
 
@@ -125,29 +147,49 @@ relimp <- function(dependent, enter, forced=NULL, measure="lmg",
                 dostop=TRUE)
         }
     }
-    res = tryCatch(calc.relimp(as.formula(fo), data = dta, type = measure, 
-        rank = ranks, rela = scale, always = forced, na.action=missingopt,
-        weights=ww), 
-        error = function(e) {
-            if (substr(e$message, 1, 22) == "cannot allocate vector") {
-                warns$warn(gtxt("Too many independent variables.  Reduce the number or change some to forced"),
-                    dostop=TRUE)
-            } else {
-                browser()
-                warns$warn(e$message, dostop=TRUE)
+
+    if (length(splitvars) == 0) {
+        res = tryCatch(calc.relimp(as.formula(fo), data = dta, type = measure, 
+            rank = ranks, rela = scale, always = forced, na.action=missingopt,
+            weights=ww), 
+            error = function(e) {
+                if (substr(e$message, 1, 22) == "cannot allocate vector") {
+                    warns$warn(gtxt("Too many independent variables.  Reduce the number or change some to forced"),
+                        dostop=TRUE)
+                } else {
+                    ###browser()
+                    warns$warn(e$message, dostop=TRUE)
+                }
             }
+        )
+        } else {
+            res = tryCatch(mianalyze.relimp(formula=as.formula(fo), implist = dta, level=.95, type = measure, 
+                                       rank = ranks, rela = scale, always = forced, na.action=missingopt,
+                                       weights=ww, no.CI=TRUE), 
+                           error = function(e) {
+                               if (substr(e$message, 1, 22) == "cannot allocate vector") {
+                                   warns$warn(gtxt("Too many independent variables.  Reduce the number or change some to forced"),
+                                              dostop=TRUE)
+                               } else {
+                                   # cat("res failure\n\n")
+                                   # browser()
+                                   warns$warn(e$message, dostop=TRUE)
+                               }
+                           }
+            )
         }
-    )
-        
+
     # print results
-    StartProcedure(gtxt("Regression Relative Importance"), "STATS RELIMP") 
+
+    StartProcedure(gtxt("Regression Relative Importance"), "STATS RELIMP")
 
     # fit statistics
-    lbls = c(gtxt("Dependent variable"), gtxt("Number of Cases"), gtxt("Number of Valid Cases"),
-        gtxt("Weight"),
+    lbls = c(gtxt("Dependent variable"), gtxt("Number of Cases (across any imputation splits)"),
+        gtxt("Weight"), gtxt("Number of Imputations"),
         gtxt("R-Squared"), gtxt("Forced Variables"), gtxt("R-Squared for Forced Variables"), 
         gtxt("R-Squared for Other Predictors"), gtxt("Metric Normalization"))
         
+
     if (numforced >0) {  # calculate incremental R2 for importance variables
         forcedr2 = res$R2 - res$R2.decomp
         forcedlist = paste(forced, collapse=" ")
@@ -156,37 +198,59 @@ relimp <- function(dependent, enter, forced=NULL, measure="lmg",
         forcedr2 = 0.
         forcedlist = gtxt("<NONE>")
     }
-    if (res$rela)   # indicator for status of scaling to 100%
+    if (res$rela) {  # indicator for status of scaling to 100%
         scaled = "Yes"
-    else
+    }
+    else {
         scaled = "No"
-    vals = c(res$namen[[1]], numcases, sum(complete.cases(dta)), 
+    }
+    if (issplit) {
+        ncasessplit = length(sapply(dta, complete.cases))
+    } else {
+        ncasessplit = sum(complete.cases(dta))
+    }
+    vals = c(res$namen[[1]], numcases,
              ifelse(is.null(weight), gtxt("<NONE>"), weight),
+             numsplits,
              round(res$R2,4), forcedlist, forcedr2, round(res$R2.decomp,4), scaled)
     spsspivottable.Display(data.frame(vals, row.names=lbls), title = gtxt("Summary Fit Statistics"),
     collabels=c(gtxt("Summary")), templateName="RELIMPFIT", outline=gtxt("Summary"))
+
     
-    f <- function(aname)    # closure for selecting list of attributes from result structure
+    f <- function(aname) {    # closure for selecting list of attributes from result structure
         return(attr(res, aname))
+    }
         
     # relative importance metrics - assemble the columns for the measures
     df = data.frame(lapply(measure, f), check.names=FALSE)
     names(df) <- measure
+
     hasshapley = 
-    if (scale)
+    if (scale) {
         caption = gtxt("Measures are scaled to 100%.")
-    else
+    }
+    else {
         caption = gtxt("Measures are not scaled to 100%.")
-    if (!is.na(match("lmg", measure)))
+    }
+    if (!is.na(match("lmg", measure))) {
         caption = paste(caption, gtxt("Measure lmg is also known as the Shapley value"), sep="\n",collapse="")
-    spsspivottable.Display(df, title=gtxt("Relative Importance Measures"), templateName="RELIMPIMP",
+    }
+    # this is absurd, but a one-column data fame does not work right otherwise
+    dfplus = df
+    dfplus[ncol(dfplus)+1] = 1
+    
+    df2 = dfplus[order(dfplus[[1]], decreasing=TRUE),][-ncol(dfplus)]
+    
+    spsspivottable.Display(df2, title=gtxt("Relative Importance Measures"), templateName="RELIMPIMP",
         outline=gtxt("Relative Importance Measures"), caption=caption)
-        
+
     # table of ranks
     if (ranks) {
-        df = data.frame(lapply(paste(measure, ".rank", sep=""), f))
-        names(df) <- measure
-        spsspivottable.Display(df, title=gtxt("Importance Ranks by Measure"), templateName="RELIMPRANK",
+        ranks = data.frame(lapply(-df, rank))
+        row.names(ranks) = row.names(df)
+        ranks[ncol(ranks)+1] = 1
+        ranks = ranks[order(ranks[[1]], decreasing=FALSE),][-ncol(ranks)]
+        spsspivottable.Display(ranks, title=gtxt("Importance Ranks by Measure"), templateName="RELIMPRANK",
             outline = gtxt("Importance Rank"), format=formatSpec.Count)
     }
     
@@ -287,6 +351,22 @@ Warn = function(procname, omsid) {
     return(lcl)
 }
 
+getsplits <- function (allvars) {
+    # return list of splits and number of cases
+    
+    dta = list()
+    d = spssdata.GetSplitDataFromSPSS(allvars, missingValueToNA = TRUE,
+                             factorMode = "labels")
+    nd = 1
+    while (!spssdata.IsLastSplit()) {
+        dta[[nd]] = spssdata.GetSplitDataFromSPSS(allvars, missingValueToNA = TRUE,
+            factorMode = "labels")
+        nd = nd + 1
+
+    }
+    spssdata.CloseDataConnection()
+    return(dta)
+}
 
 # override for api to account for extra parameter in V19 and beyond
 StartProcedure <- function(procname, omsid) {
@@ -297,6 +377,7 @@ StartProcedure <- function(procname, omsid) {
        spsspkg.StartProcedure(omsid)
     }
 }
+
 setuplocalization = function(domain) {
     # find and bind translation file names
     # domain is the root name of the extension command .R file, e.g., "SPSSINC_BREUSCH_PAGAN"
