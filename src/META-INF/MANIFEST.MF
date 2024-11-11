@@ -1,4 +1,4 @@
-Name: STATS RELIMP
+Name: STATS_RELIMP
 Display-Name: Regression Relative Importance
 Dialog-Specs: STATS_RELIMP.spd
 Command-Specs: STATS_RELIMP.xml
